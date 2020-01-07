@@ -1,0 +1,8 @@
+编译环境：VC++ 6.0
+
+开始：
+1、新建工程：Win32 Console Application
+2、新建文件：C++ Source File
+3、编写程序
+4、编译（compile）Ctrl+F7
+5、执行（BuildExecute）Ctrl+F5
