@@ -1,0 +1,26 @@
+1、文件指针
+定义：
+FILE *指针变量名;
+
+2、打开文件
+fopen("文件名", "文件打开方式")
+文件打开方式：r, rb, wb, a 等
+
+3、关闭文件
+fclose(文件指针)
+判断文件结束函数（feof），feof的返回值是1代表文件结束，否则为0。
+
+#include <stdio.h>  //执行输入和输出（包括库变量、库宏、库函数）
+#include <stdlib.h> //通用工具函数
+#include <conio.h>  //控制台输入输出（通过控制台进行数据输入和输出的函数）
+main(){
+	FILE *fpout;
+	char ch;
+	fpout=fopen("test.dat","r");
+	ch=fgetc(fpout);
+	while(ch!=EOF){ //判断文件是否结束
+		putchar(ch);
+		//ch=getc(fpout);
+	}
+	fclose(fpout);
+}
