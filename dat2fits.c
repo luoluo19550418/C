@@ -12,7 +12,7 @@
 
 float data[lnum-1][bnum-1];
 int data1[8698965]; //lnum*bnum-1
-main(int argc, char *argv[]){ 
+main(int argc, char *argv[]){            //argc(argument count) argv(argument vector)
   char outname[20];
   float L,B,peak,area;
   int x,y,i,j,anum;
@@ -27,7 +27,7 @@ main(int argc, char *argv[]){
     exit(0);
   }
 
- ///////////////////////////////////////////////////////////
+ //----------------------------------------------------------------
   while(!feof(infp)){
     fgets(tmpchar,100,infp);
     sscanf(tmpchar,"%f %f %s %s\n",&L,&B,char1,char2);
@@ -44,7 +44,7 @@ main(int argc, char *argv[]){
     }
   }
 
-////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------
   for(i=0;i<bnum;i++){
     for(j=0;j<lnum;j++){
       data1[i*lnum+j]=htonl((int)(data[j][i]*1000));
@@ -87,7 +87,7 @@ main(int argc, char *argv[]){
   //______________header end and  savedata start___________
   fwrite(&data1,sizeof(int),lnum*bnum,fitsfp);
 
-/////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------
   anum=ceil(lnum*bnum/2880.0)*2880-lnum*bnum;
   for(i = 0;i < anum; i++){ 
     fprintf(fitsfp,"%c",' ');
