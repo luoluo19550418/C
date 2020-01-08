@@ -1,5 +1,6 @@
 一、编译环境：VS2017
 https://blog.csdn.net/qq_36556893/article/details/83177970
+！注意：C语言源文件 后缀名要改为 .c
 
 二、编译环境：VC++ 6.0
 开始：
