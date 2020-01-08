@@ -1,0 +1,2 @@
+1、vs2017 error c4996: 'fopen': This function or variable may be unsafe
+解决方案：项目 =》属性 =》c/c++  =》预处理器=》点击预处理器定义，编辑，加入_CRT_SECURE_NO_WARNINGS，即可。
