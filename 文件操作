@@ -9,18 +9,37 @@ fopen("文件名", "文件打开方式")
 3、关闭文件
 fclose(文件指针)
 判断文件结束函数（feof），feof的返回值是1代表文件结束，否则为0。
-
+读取dat文件代码块：
 #include <stdio.h>  //执行输入和输出（包括库变量、库宏、库函数）
 #include <stdlib.h> //通用工具函数
 #include <conio.h>  //控制台输入输出（通过控制台进行数据输入和输出的函数）
 main(){
-	FILE *fpout;
-	char ch;
-	fpout=fopen("test.dat","r");
-	ch=fgetc(fpout);
-	while(ch!=EOF){ //判断文件是否结束
-		putchar(ch);
-		//ch=getc(fpout);
-	}
-	fclose(fpout);
+  FILE *fpout;
+  char ch;
+  fpout=fopen("test.dat","r");
+  ch=fgetc(fpout);       
+  while(ch!=EOF){   //判断文件是否结束
+    putchar(ch);
+    ch=getc(fpout);   //fgetc是一个函数，getc是一个宏
+  }
+  fclose(fpout);
 }
+
+4、从键盘输入的文本按原样输出到名为file_a.dat文件中，用字符@作为键盘输入结束标志？
+#include <stdio.h>
+#include <stdlib.h>
+main(){
+  FILE *fpout;
+  char ch;
+  if((fpout=fopen("file_a.dat", "w"))==NULL){
+    printf("Can't open this file!\n");
+    exit(0);
+  }
+  ch=getchar();
+  while(ch!='@'){
+    fputc(ch, fpout);
+    ch=getchar();
+  }
+  fclose(fpout);
+}
+    
