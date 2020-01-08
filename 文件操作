@@ -16,7 +16,7 @@ fclose(文件指针)
 main(){
   FILE *fpout;
   char ch;
-  fpout=fopen("test.dat","r");
+  fpout=fopen("file_a.dat","r");
   ch=fgetc(fpout);       
   while(ch!=EOF){   //判断文件是否结束
     putchar(ch);
