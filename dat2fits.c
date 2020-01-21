@@ -1,4 +1,5 @@
 // gcc dat2fits.c -o dat2fits
+// 20200121 ip12 有改动
 #define minL 0.0
 #define maxL 229.75
 #define minB -5.25 
@@ -10,7 +11,7 @@
 #include <string.h>
 #include <math.h>
 
-float data[lnum-1][bnum-1];
+float data[lnum][bnum];   //如果定义太短，数组会有溢出
 int data1[8698965]; //lnum*bnum-1
 main(int argc, char *argv[]){            //argc(argument count) argv(argument vector)
   char outname[20];
@@ -26,7 +27,12 @@ main(int argc, char *argv[]){            //argc(argument count) argv(argument ve
     printf("Can't Open File %s,try again !\n",argv[1]);
     exit(0);
   }
-
+//---------------------------------------------------//
+  for(i=0;i<lnum;i++){
+    for(j=0;j<bnum;j++){
+      data[i][j]=0
+    }
+  } 
  //----------------------------------------------------------------
   while(!feof(infp)){
     fgets(tmpchar,100,infp);
@@ -34,12 +40,12 @@ main(int argc, char *argv[]){            //argc(argument count) argv(argument ve
     if(!strstr(char1,"NaN")){
       sscanf(tmpchar,"%f %f %f %f\n",&L,&B,&peak,&area);
       if(L>=minL && L<=maxL){ 
-	x=(int)(lnum-(L-minL)*60.0-1+0.5);
+	x=(int)(lnum-(L-minL)*60.0-0.5);
 	if(B>=minB && B<=maxB){ 
-	  y=(int)((B-minB)*60.0-1+0.5);
+	  y=(int)((B-minB)*60.0+0.5);
 	}
       }
-      printf("%d %d %f %f %f\n",x,y,L,B,lnum-(L-minL)*60.0-1);
+      //printf("%d %d %f %f %f\n",x,y,L,B,lnum-(L-minL)*60.0-1);
       data[x][y]=peak;
     }
   }
@@ -61,7 +67,7 @@ main(int argc, char *argv[]){            //argc(argument count) argv(argument ve
 
   //--------------save header---------------------------------
   fprintf(fitsfp,"SIMPLE  =                    T /%48s"," ");   //指明文件是否符合FITS标准，%48表示48个空字符数
-  fprintf(fitsfp,"BITPIX  =                   32 /%48s"," ");   //每一个像元值的存储位数
+  fprintf(fitsfp,"BITPIX  =                   16 /%48s"," ");   //每一个像元值的存储位数
   fprintf(fitsfp,"NAXIS   =                    2 /%48s"," ");   //指明图像里的坐标轴数     
   fprintf(fitsfp,"NAXIS1  =               %05d  /%48s",lnum," ");   //X(RA)方向像元数     
   fprintf(fitsfp,"NAXIS2  =                 %03d  /%48s",bnum," ");   //Y(Dec)方向像元数，输出一个数值变量，不足3位在前面补0
@@ -85,7 +91,7 @@ main(int argc, char *argv[]){            //argc(argument count) argv(argument ve
   }
   
   //______________header end and  savedata start___________
-  fwrite(&data1,sizeof(int),lnum*bnum,fitsfp);
+  fwrite(&data1,sizeof(short int),lnum*bnum,fitsfp);   //短整型，16位
 
 //-----------------------------------------------------------------------
   anum=ceil(lnum*bnum/2880.0)*2880-lnum*bnum;
