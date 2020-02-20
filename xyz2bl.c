@@ -1,3 +1,4 @@
+//轨道坐标转银道坐标
 void XYZtoBLH(double X, double Y, double Z) 
 {
 
