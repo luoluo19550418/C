@@ -1,2 +1,5 @@
-1、vs2017 error c4996: 'fopen': This function or variable may be unsafe
-解决方案：项目 =》属性 =》c/c++  =》预处理器=》点击预处理器定义，编辑，加入_CRT_SECURE_NO_WARNINGS，即可。
+1、Q：vs2017 error c4996: 'fopen': This function or variable may be unsafe
+   A：解决方案：项目 =》属性 =》c/c++  =》预处理器=》点击预处理器定义，编辑，加入_CRT_SECURE_NO_WARNINGS，即可。
+
+2、Q：VS2017调试C++程序，提示无法启动程序，“xx.exe”。系统找不到指定文件的解决办法
+   A：删除所有项目，重启vs2017，写脚本重新ctrl+f5编译
