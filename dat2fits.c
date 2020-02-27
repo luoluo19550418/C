@@ -1,3 +1,7 @@
+//共2880字节为一块，fits头为一块
+//二进制数据存储也是2880字节为一块，块数=总数据数(字符)*2/2880；1个数据16位，也就是2个字节（等于1个数据字符）
+//读取fits时，需要头文件的中心坐标，数据长度等参数
+
 // gcc dat2fits.c -o dat2fits
 // 20200121 ip12 有改动
 #define minL 0.0
@@ -95,7 +99,7 @@ main(int argc, char *argv[]){            //argc(argument count) argv(argument ve
 
 //-----------------------------------------------------------------------
   anum=ceil(lnum*bnum/2880.0)*2880-lnum*bnum;
-  for(i = 0;i < anum; i++){ 
+  for(i = 0;i < anum; i++){     //在最后一块未满2880字节添加空格符。
     fprintf(fitsfp,"%c",' ');
   }
   fclose(fitsfp);
