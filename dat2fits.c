@@ -57,7 +57,7 @@ main(int argc, char *argv[]){            //argc(argument count) argv(argument ve
 //-------------------------------------------------------------------
   for(i=0;i<bnum;i++){
     for(j=0;j<lnum;j++){
-      data1[i*lnum+j]=htonl((int)(data[j][i]*1000));
+      data1[i*lnum+j]=htonl((int)(data[j][i]*1000));  //htonl将一个无符号短整形数从网络字节顺序转换为主机字节顺序；ntohl
     }
   }
 
