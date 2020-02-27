@@ -6,3 +6,6 @@
 
 3、Q：发生生成错误，是否继续并运行上次的成功生成？
    A：可能是语法错误。
+
+4、Q：使用VS会出现'scanf': This function or variable may be unsafe. Consider using scanf_s ins错误解决方案
+   A：将'scanf'改写成'scanf_s'即可
