@@ -31,20 +31,20 @@ main(int argc, char *argv[]){            //argc(argument count) argv(argument ve
     printf("Can't Open File %s,try again !\n",argv[1]);
     exit(0);
   }
-//---------------------------------------------------//
+  //---------------------------------------------------//
   for(i=0;i<lnum;i++){
     for(j=0;j<bnum;j++){
       data[i][j]=0
     }
   } 
- //----------------------------------------------------------------
+  //----------------------------------------------------------------
   while(!feof(infp)){
     fgets(tmpchar,100,infp);
     sscanf(tmpchar,"%f %f %s %s\n",&L,&B,char1,char2);
     if(!strstr(char1,"NaN")){
       sscanf(tmpchar,"%f %f %f %f\n",&L,&B,&peak,&area);
       if(L>=minL && L<=maxL){ 
-	x=(int)(lnum-(L-minL)*60.0-0.5);
+	x=(int)(lnum-(L-minL)*60.0-0.5);  //向上取整
 	if(B>=minB && B<=maxB){ 
 	  y=(int)((B-minB)*60.0+0.5);
 	}
@@ -54,7 +54,10 @@ main(int argc, char *argv[]){            //argc(argument count) argv(argument ve
     }
   }
 
-//-------------------------------------------------------------------
+  //-------------------------------------------------------------------
+  data[0][0]=1;
+  data[1][0]=2;
+  data[lnum-1][bnum-1]=3;
   for(i=0;i<bnum;i++){
     for(j=0;j<lnum;j++){
       data1[i*lnum+j]=htonl((int)(data[j][i]*1000));  //htonl将一个无符号短整形数从网络字节顺序转换为主机字节顺序；ntohl
@@ -81,15 +84,16 @@ main(int argc, char *argv[]){            //argc(argument count) argv(argument ve
   fprintf(fitsfp,"CTYPE1  = 'GLON-GLS'           /%48s"," ");   //RA=CRVAL1+(i-CRPIX1)*CDELT1/COS(Dec)
   fprintf(fitsfp,"CRVAL1  = %+1.13e /%48s", 120.0," ");   //X轴参考位置
   fprintf(fitsfp,"CDELT1  = %+1.13e /%48s",-1.0/60.0," ");   //X轴坐标增量
-  fprintf(fitsfp,"CRPIX1  = %+1.13e /%48s",6226.0," ");   //X轴像素位置
+  fprintf(fitsfp,"CRPIX1  = %+1.13e /%48s",6586.0," ");   //X轴像素位置
   fprintf(fitsfp,"CROTA1  =                    0 /%48s"," ");   //
   fprintf(fitsfp,"CTYPE2  = 'GLAT-GLS'           /%48s"," ");  
   fprintf(fitsfp,"CRVAL2  = %+1.13e /%48s",0.0," ");    
   fprintf(fitsfp,"CDELT2  = %+1.13e /%48s",1.0/60.0," ");
-  fprintf(fitsfp,"CRPIX2  = %+1.13e /%48s",319.0," ");
+  fprintf(fitsfp,"CRPIX2  = %+1.13e /%48s",316.0," ");
   fprintf(fitsfp,"CROTA2  =                    0 /%48s"," ");
   fprintf(fitsfp,"OBJECT  = 'MWISP'              /%48s"," ");
   fprintf(fitsfp,"END                             %48s"," ");
+  
   for(i=0;i<16;i++){
     fprintf(fitsfp,"%80s"," "); 
   }
